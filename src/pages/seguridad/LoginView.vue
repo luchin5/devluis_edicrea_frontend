@@ -1,120 +1,286 @@
 <template>
-  <div class="min-h-screen bg-slate-100 flex items-center justify-center py-6 px-4">
+  <div class="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4">
+    <!-- CONTENEDOR PRINCIPAL -->
     <div
-      class="w-full max-w-5xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden grid lg:grid-cols-2"
+      class="relative w-full max-w-6xl h-[calc(100vh-32px)] max-h-[720px] overflow-hidden rounded-[2rem] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
     >
-      <!-- Panel izquierdo -->
-      <div class="hidden lg:flex bg-gray-200 text-slate-800 flex-col justify-center p-5">
-        <div class="mt-5">
-          <img src="/images/edicrea.png" class="w-full max-h-100 object-cover rounded-2xl" />
-        </div>
-      </div>
+      <!-- IMAGEN DE FONDO DE TODA LA COMPOSICIÓN -->
+      <img src="/images/casa4.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
 
-      <!-- Panel derecho -->
-      <div class="p-8 md:p-12">
-        <div class="flex justify-center lg:hidden mb-8">
-          <img src="/images/edicrea.png" alt="Constructora CRM" class="w-20 h-20 object-contain" />
-        </div>
+      <!-- CAPA DE LECTURA -->
+      <div class="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent"></div>
 
-        <h2 class="text-3xl font-bold text-slate-800 text-center lg:text-left">Iniciar Sesión</h2>
+      <!-- ========================================= -->
+      <!-- DECORACIÓN DE FONDO -->
+      <!-- ========================================= -->
 
-        <p class="text-gray-500 mt-2 text-center lg:text-left">
-          Ingrese sus credenciales para continuar.
-        </p>
+      <div class="absolute -top-32 -left-32 w-[450px] h-[450px] rounded-full bg-sky-50"></div>
 
-        <form @submit.prevent="login" class="mt-10 space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"> Usuario </label>
+      <div
+        class="absolute -bottom-40 left-[35%] w-[500px] h-[500px] rounded-full bg-blue-50/80"
+      ></div>
 
-            <input
-              v-model="nickname"
-              type="text"
-              placeholder="Ingrese su usuario"
-              class="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-600"
-            />
-          </div>
+      <div class="absolute top-20 right-[35%] w-64 h-64 rounded-full bg-cyan-50/70 blur-2xl"></div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"> Contraseña </label>
+      <!-- ========================================= -->
+      <!-- CONTENIDO -->
+      <!-- ========================================= -->
 
-            <div class="relative">
-              <input
-                v-model="contrasena"
-                :type="mostrarContrasena ? 'text' : 'password'"
-                placeholder="********"
-                class="w-full rounded-xl border border-gray-300 px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-orange-500"
+      <div class="relative z-10 grid h-full lg:grid-cols-2">
+        <!-- ========================================= -->
+        <!-- PANEL IZQUIERDO -->
+        <!-- ========================================= -->
+
+        <section
+          class="relative flex h-full flex-col justify-between overflow-hidden px-10 py-10 xl:px-14"
+        >
+          <!-- DECORACIÓN -->
+          <div class="absolute -top-32 -left-32 h-[420px] w-[420px] rounded-full bg-sky-50"></div>
+
+          <div
+            class="absolute bottom-[-180px] left-[-100px] h-[420px] w-[420px] rounded-full bg-blue-50"
+          ></div>
+
+          <div
+            class="absolute right-[-120px] top-[20%] h-[300px] w-[300px] rounded-full bg-cyan-50/60 blur-3xl"
+          ></div>
+
+          <!-- CONTENIDO -->
+          <div class="relative z-10 flex h-full flex-col p-10 xl:p-14">
+            <!-- LOGO -->
+            <div>
+              <img
+                src="/images/edicrea.png"
+                alt="EDICREA - Constructora Inmobiliaria"
+                class="w-[180px] xl:w-[200px] object-contain"
               />
+            </div>
 
-              <button
-                type="button"
-                @click="mostrarContrasena = !mostrarContrasena"
-                class="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 hover:bg-orange-50 hover:text-orange-500 transition"
-                :title="mostrarContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            <!-- TEXTO -->
+            <div class="my-auto max-w-lg">
+              <div class="mb-6 h-1 w-16 rounded-full bg-[#0879a8]"></div>
+
+              <h1
+                class="text-4xl font-bold leading-[1.08] tracking-tight text-[#0b2d52] xl:text-5xl"
               >
-                <!-- Ojo abierto -->
-                <svg
-                  v-if="!mostrarContrasena"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.8"
-                  stroke="currentColor"
-                  class="h-5 w-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12 18 18.75 12 18.75 2.25 12 2.25 12Z"
-                  />
+                Construyendo lugares
+                <span class="block text-[#0879a8]"> para grandes historias. </span>
+              </h1>
 
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
+              <p class="mt-6 max-w-md text-base leading-relaxed text-slate-500 xl:text-lg">
+                Administramos hoy los espacios del mañana.
+              </p>
+            </div>
 
-                <!-- Ojo tachado -->
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.8"
-                  stroke="currentColor"
-                  class="h-5 w-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.98 8.223A10.477 10.477 0 0 0 2.25 12c1.5 2.7 4.5 6.75 9.75 6.75a9.77 9.77 0 0 0 4.17-.91"
-                  />
+            <!-- INDICADORES DECORATIVOS -->
+            <div class="flex items-center gap-2">
+              <div class="h-2.5 w-9 rounded-full bg-[#0879a8]"></div>
 
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6.23 6.23C7.8 5.16 9.73 4.5 12 4.5c5.25 0 8.25 4.05 9.75 7.5a13.6 13.6 0 0 1-3.14 4.47"
-                  />
+              <div class="h-2.5 w-9 rounded-full bg-slate-300"></div>
 
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6.23 6.23 3 3m3.23 3.23 4.54 4.54m3.46 3.46L21 21"
-                  />
-                </svg>
-              </button>
+              <div class="h-2.5 w-9 rounded-full bg-slate-300"></div>
             </div>
           </div>
+        </section>
 
-          <button
-            type="submit"
-            class="w-full bg-black hover:bg-gray-500 text-white py-3 rounded-xl font-semibold transition"
+        <!-- ========================================= -->
+        <!-- PANEL DERECHO -->
+        <!-- ========================================= -->
+
+        <section
+          class="relative flex h-full items-center justify-center overflow-hidden px-6 py-6 md:px-10 lg:px-12"
+        >
+          <!-- ========================================= -->
+          <!-- IMAGEN DE FONDO -->
+          <!-- ========================================= -->
+
+          <!-- ========================================= -->
+          <!-- CAPA SUAVE SOBRE LA IMAGEN -->
+          <!-- ========================================= -->
+
+          <!-- ========================================= -->
+          <!-- LOGIN -->
+          <!-- ========================================= -->
+
+          <div
+            class="relative z-10 w-[calc(100%-2rem)] max-w-md rounded-[1.75rem] bg-white/95 p-7 shadow-2xl backdrop-blur-sm md:p-9"
           >
-            Ingresar
-          </button>
-        </form>
+            <!-- LOGO MOBILE -->
+            <div class="mb-6 flex justify-center lg:hidden">
+              <img src="/images/edicrea.png" alt="EDICREA" class="h-20 w-auto object-contain" />
+            </div>
 
-        <div class="mt-10 text-center text-sm text-gray-500">© 2026 Constructora CRM</div>
+            <!-- TITULO -->
+
+            <div class="mb-7">
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#0879a8]">
+                Plataforma EDICREA
+              </p>
+
+              <h2 class="text-3xl font-bold tracking-tight text-[#0b2d52]">Iniciar sesión</h2>
+
+              <p class="mt-2 text-sm text-slate-500">Ingrese sus credenciales para continuar.</p>
+            </div>
+
+            <!-- FORMULARIO -->
+
+            <form @submit.prevent="login" class="space-y-5">
+              <!-- USUARIO -->
+
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-slate-700"> Usuario </label>
+
+                <div class="relative">
+                  <div
+                    class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                  >
+                    <!-- tu SVG de usuario -->
+                    <img src="/images/user.jpg" alt="Usuario" class="h-5 w-5" />
+                  </div>
+
+                  <input
+                    v-model="nickname"
+                    type="text"
+                    placeholder="Ingrese su usuario"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3.5 pl-12 pr-4 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-[#0879a8] focus:bg-white focus:ring-4 focus:ring-[#0879a8]/10"
+                  />
+                </div>
+              </div>
+
+              <!-- CONTRASEÑA -->
+
+              <div>
+                <label class="mb-2 block text-sm font-semibold text-slate-700"> Contraseña </label>
+
+                <div class="relative">
+                  <input
+                    v-model="contrasena"
+                    :type="mostrarContrasena ? 'text' : 'password'"
+                    placeholder="Ingrese su contraseña"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3.5 pl-4 pr-12 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-[#0879a8] focus:bg-white focus:ring-4 focus:ring-[#0879a8]/10"
+                  />
+
+                  <!-- CONSERVA AQUÍ TU BOTÓN DEL OJO -->
+                  <button
+                    type="button"
+                    @click="mostrarContrasena = !mostrarContrasena"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
+                  >
+                    <!-- Mdi del ojo -->
+                    <svg
+                      v-if="mostrarContrasena"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg
+                      v-else
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a21.64 21.64 0 0 1 5.06-6.06"
+                      ></path>
+                      <path d="M1 1l22 22"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- OPCIONES -->
+
+              <div class="flex items-center justify-between">
+                <label class="flex cursor-pointer items-center gap-2 text-sm text-slate-500">
+                  <input
+                    type="checkbox"
+                    class="h-4 w-4 rounded border-slate-300 text-[#0879a8] focus:ring-[#0879a8]"
+                  />
+
+                  <span>Recordarme</span>
+                </label>
+
+                <button
+                  type="button"
+                  class="text-sm font-semibold text-[#0879a8] transition hover:text-[#0b2d52]"
+                >
+                  ¿Olvidó su contraseña?
+                </button>
+              </div>
+
+              <!-- BOTÓN -->
+
+              <button
+                type="submit"
+                :disabled="cargando"
+                class="flex w-full items-center justify-center gap-3 rounded-2xl bg-[#0879a8] py-3.5 font-semibold text-white shadow-lg shadow-[#0879a8]/20 transition hover:-translate-y-0.5 hover:bg-[#06688f] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:translate-y-0"
+              >
+                <!-- CIRCULAR PROGRESS -->
+                <svg
+                  v-if="cargando"
+                  class="h-5 w-5 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-30"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  />
+
+                  <path
+                    class="opacity-90"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+
+                <span>
+                  {{ cargando ? 'Ingresando...' : 'Ingresar' }}
+                </span>
+              </button>
+            </form>
+
+            <!-- SEGURIDAD -->
+
+            <div class="mt-6 flex items-start gap-3 border-t border-slate-200 pt-5">
+              <div
+                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#e5f5fa] text-[#0879a8]"
+              >
+                🔒
+              </div>
+
+              <div>
+                <p class="text-sm font-semibold text-slate-700">Acceso protegido</p>
+
+                <p class="mt-1 text-xs leading-relaxed text-slate-500">
+                  Tu información está protegida mediante mecanismos de seguridad y autenticación.
+                </p>
+              </div>
+            </div>
+
+            <p class="mt-5 text-center text-xs text-slate-400">
+              © 2026 EDICREA · Constructora Inmobiliaria
+            </p>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -132,22 +298,28 @@ const router = useRouter()
 const nickname = ref('')
 const contrasena = ref('')
 const authStore = useAuthStore()
+const cargando = ref(false)
 
 const login = async () => {
+  if (cargando.value) return
+
+  cargando.value = true
+
   try {
     const baseUrl = import.meta.env.VITE_API_URL
-    console.log('base ...url', baseUrl)
-    console.log('nickname', nickname, contrasena)
+
     const response = await axios.post(`${baseUrl}/login`, {
       nickname: nickname.value,
       contrasena: contrasena.value,
     })
-    console.log(response.data)
+
     authStore.login(response.data)
-    // NAVEGAR A RUTA
+
     router.replace('/dashboard')
   } catch (error) {
     alert(error.response?.data?.message || 'Error al iniciar sesión')
+  } finally {
+    cargando.value = false
   }
 }
 </script>

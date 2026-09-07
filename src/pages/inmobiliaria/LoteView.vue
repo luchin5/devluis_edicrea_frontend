@@ -1,402 +1,831 @@
 <template>
-  <div>
-    <!-- Encabezado -->
-    <div class="mb-8 flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-bold text-slate-800">Lotes de la Zona: {{ zona.nombre }}</h1>
-        <p class="mt-2 text-slate-500">
-          Proyecto:
-          <span class="font-medium">{{ zona.proyecto }}</span>
+  <div class="w-full">
+    <!-- ===================================================== -->
+    <!-- ENCABEZADO -->
+    <!-- ===================================================== -->
 
-          · Plano:
-          <span class="font-medium">{{ zona.plano }}</span>
-
-          · Zona:
-          <span class="font-medium">{{ zona.nombre }}</span>
+    <div class="mb-6 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+      <div class="min-w-0">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#0879a8]">
+          Gestión inmobiliaria
         </p>
-        <!--p class="mt-2 text-slate-500">
-          Seleccione un lote del plano para visualizar o modificar su información.
-        </p-->
+
+        <h1 class="mt-1 text-2xl font-bold tracking-tight text-[#0b2d52] md:text-3xl">
+          Lotes de la zona
+        </h1>
+
+        <div class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
+          <span>
+            Proyecto:
+            <span class="font-semibold text-slate-700">
+              {{ zona.proyecto }}
+            </span>
+          </span>
+
+          <span class="text-slate-300">•</span>
+
+          <span>
+            Plano:
+            <span class="font-semibold text-slate-700">
+              {{ zona.plano }}
+            </span>
+          </span>
+
+          <span class="text-slate-300">•</span>
+
+          <span>
+            Zona:
+            <span class="font-semibold text-slate-700">
+              {{ zona.nombre }}
+            </span>
+          </span>
+        </div>
       </div>
+
+      <!-- VOLVER -->
 
       <RouterLink
         :to="`/proyectos/${route.params.proyectoId}/planos/${route.params.planoId}/zonas`"
-        class="rounded-xl border border-slate-300 px-5 py-3 hover:bg-slate-100"
+        class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-600 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0879a8]/30 hover:bg-[#e8f6fb] hover:text-[#0879a8] hover:shadow-md"
       >
-        ← Volver a Zonas
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.8"
+            d="M19 12H5m7 7-7-7 7-7"
+          />
+        </svg>
+
+        Volver a zonas
       </RouterLink>
     </div>
 
+    <!-- ===================================================== -->
     <!-- CONTENIDO PRINCIPAL -->
-    <div class="grid grid-cols-12 gap-6">
-      <!-- PLANO -->
-      <div class="col-span-12 lg:col-span-8 rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div class="border-b px-6 py-4">
-          <h2 class="text-xl font-semibold text-slate-800">Plano Interactivo</h2>
+    <!-- ===================================================== -->
 
-          <p class="text-sm text-slate-500">Haga clic sobre un lote.</p>
+    <div class="grid grid-cols-1 gap-6 xl:grid-cols-12">
+      <!-- =================================================== -->
+      <!-- PLANO INTERACTIVO -->
+      <!-- =================================================== -->
+
+      <section
+        class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm xl:col-span-8"
+      >
+        <!-- HEADER PLANO -->
+
+        <div
+          class="flex flex-col gap-3 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between md:px-6"
+        >
+          <div>
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e8f6fb] text-[#0879a8]"
+              >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13Z"
+                  />
+
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M7 15 10 12l2 2 3-4 2 3"
+                  />
+                </svg>
+              </div>
+
+              <div>
+                <h2 class="text-base font-bold text-[#0b2d52] md:text-lg">Plano interactivo</h2>
+
+                <p class="mt-0.5 text-xs text-slate-400">
+                  Seleccione un lote para visualizar su información.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- INDICADOR -->
+
+          <div
+            class="inline-flex items-center gap-2 self-start rounded-xl bg-[#e8f6fb] px-3 py-2 text-xs font-semibold text-[#0879a8] sm:self-auto"
+          >
+            <span class="h-2 w-2 rounded-full bg-[#0879a8]"></span>
+            {{ lotes.length }} lotes
+          </div>
         </div>
 
-        <div class="flex h-[700px] items-center justify-center bg-slate-50 p-6">
-          <MiniMapa
-            :svg="svgPlano"
-            :svgIds="zona.svg_paths"
-            :color="zona.color"
-            :lotes="lotes"
-            :loteSeleccionado="loteSeleccionado?.coordenadas_svg"
-            width="100%"
-            height="620px"
-            @seleccionar-lote="seleccionarLote"
-          />
-        </div>
-      </div>
+        <!-- MAPA -->
 
+        <div class="flex min-h-[620px] items-center justify-center bg-slate-50 p-4 md:p-6">
+          <div
+            class="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-inner"
+          >
+            <MiniMapa
+              :svg="svgPlano"
+              :svgIds="zona.svg_paths"
+              :color="zona.color"
+              :lotes="lotes"
+              :loteSeleccionado="loteSeleccionado?.coordenadas_svg"
+              width="100%"
+              height="620px"
+              @seleccionar-lote="seleccionarLote"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================== -->
       <!-- PANEL DERECHO -->
-      <div class="col-span-12 lg:col-span-4 space-y-6">
-        <!-- LOTE -->
-        <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div class="border-b px-6 py-4">
-            <h2 class="font-semibold text-slate-800">
-              {{
-                loteSeleccionado
-                  ? `Manzana ${loteSeleccionado.manzana} - Lote ${loteSeleccionado.numero}`
-                  : 'Lote Seleccionado'
-              }}
-            </h2>
-          </div>
+      <!-- =================================================== -->
 
-          <div class="space-y-4 p-6">
-            <div class="flex justify-between">
-              <span class="text-slate-500">Colaborador: </span>
-              <span class="font-semibold text-slate-800">
-                {{ loteSeleccionado?.nombres }}
-                {{ loteSeleccionado?.apellidos }}
-              </span>
-            </div>
-            <div>
-              <div class="text-sm text-slate-500">Manzana</div>
+      <div class="flex flex-col gap-6 xl:col-span-4">
+        <!-- ================================================= -->
+        <!-- LOTE SELECCIONADO -->
+        <!-- ================================================= -->
 
-              <div class="text-2xl font-bold text-red-600">
-                {{ loteSeleccionado?.manzana || '--' }}
-              </div>
-            </div>
-            <div>
-              <div class="text-sm text-slate-500">Número</div>
-              <div class="text-2xl font-bold text-indigo-700">
-                {{ loteSeleccionado?.numero || '--' }}
-              </div>
-            </div>
+        <section class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
+          <!-- HEADER -->
 
-            <div class="grid grid-cols-2 gap-4">
-              <!-- ÁREA -->
-              <div>
-                <div class="text-sm text-slate-500">Área</div>
-                <div class="font-semibold">{{ loteSeleccionado?.area || '--' }} m²</div>
-              </div>
-
-              <!-- PERÍMETRO -->
-              <div>
-                <div class="text-sm text-slate-500">Perímetro</div>
-                <div class="font-semibold">{{ loteSeleccionado?.perimetro || '--' }} m</div>
-              </div>
-            </div>
-
-            <!-- ESTADO -->
-            <div>
-              <div class="text-sm text-slate-500 font-semibold">Estado</div>
-
-              <div :class="[estados[loteSeleccionado?.estado_id]?.color, 'font-bold']">
-                {{ estados[loteSeleccionado?.estado_id]?.nombre || '--' }}
-              </div>
-            </div>
-
-            <div>
-              <div class="text-sm text-slate-500">Precio</div>
-
-              <div class="font-semibold">S/ {{ loteSeleccionado?.precio || '--' }}</div>
-            </div>
-
-            <div>
-              <div class="text-sm text-slate-500">Versión</div>
-
-              v{{ loteSeleccionado?.version_actual || 1 }}
-            </div>
-
-            <div>
-              <div class="text-sm text-slate-500">Última actualización</div>
-
-              <div class="font-semibold">
-                {{
-                  loteSeleccionado?.fecha_actualizacion
-                    ? new Date(loteSeleccionado.fecha_actualizacion).toLocaleDateString()
-                    : '--'
-                }}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2 pt-4">
-              <button
-                v-if="authStore.usuario?.rol_id === 1"
-                @click="abrirModalEditar"
-                class="rounded-lg bg-amber-500 py-2 text-white hover:bg-amber-600"
+          <div class="border-b border-slate-100 bg-[#e8f6fb] px-5 py-5 md:px-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-[#0879a8] shadow-sm"
               >
-                Editar
-              </button>
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13Z"
+                  />
 
-              <button
-                v-if="authStore.usuario?.rol_id === 2"
-                @click="cambiarEstado"
-                class="rounded-lg bg-indigo-600 py-2 text-white hover:bg-indigo-700"
-              >
-                Estado
-              </button>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M8 9h8M8 12h5M8 15h4"
+                  />
+                </svg>
+              </div>
+
+              <div class="min-w-0">
+                <p class="text-xs font-semibold uppercase tracking-wide text-[#0879a8]">
+                  Lote seleccionado
+                </p>
+
+                <h2
+                  class="mt-1 truncate text-lg font-bold text-[#0b2d52]"
+                  :title="
+                    loteSeleccionado
+                      ? `Manzana ${loteSeleccionado.manzana} - Lote ${loteSeleccionado.numero}`
+                      : 'Seleccione un lote'
+                  "
+                >
+                  {{
+                    loteSeleccionado
+                      ? `Manzana ${loteSeleccionado.manzana} - Lote ${loteSeleccionado.numero}`
+                      : 'Seleccione un lote'
+                  }}
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- ESTADISTICAS -->
-        <div class="rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div class="border-b px-6 py-4">
-            <h2 class="font-semibold text-slate-800">Estadísticas</h2>
+          <!-- BODY -->
+
+          <div class="p-5 md:p-6">
+            <!-- SIN SELECCIÓN -->
+
+            <div
+              v-if="!loteSeleccionado"
+              class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-10 text-center"
+            >
+              <div
+                class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-slate-300 shadow-sm"
+              >
+                <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13Z"
+                  />
+                </svg>
+              </div>
+
+              <p class="mt-4 text-sm font-semibold text-slate-600">Seleccione un lote</p>
+
+              <p class="mt-1 text-xs leading-relaxed text-slate-400">
+                Haga clic sobre un lote del plano para consultar su información.
+              </p>
+            </div>
+
+            <!-- INFORMACIÓN -->
+
+            <div v-else class="space-y-5">
+              <!-- COLABORADOR -->
+
+              <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-4">
+                <div
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#0879a8] shadow-sm"
+                >
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.8"
+                      d="M16 19v-1.5A3.5 3.5 0 0 0 12.5 14h-5A3.5 3.5 0 0 0 4 17.5V19m6-9a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7-3a3 3 0 0 1 0 6m3 6v-1.5a3.5 3.5 0 0 0-2.5-3.35"
+                    />
+                  </svg>
+                </div>
+
+                <div class="min-w-0">
+                  <p class="text-xs text-slate-400">Colaborador</p>
+
+                  <p class="truncate text-sm font-semibold text-slate-700">
+                    {{ loteSeleccionado.nombres }}
+                    {{ loteSeleccionado.apellidos }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- MANZANA / NÚMERO -->
+
+              <div class="grid grid-cols-2 gap-3">
+                <div class="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
+                  <p class="text-xs font-medium text-slate-400">Manzana</p>
+
+                  <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
+                    {{ loteSeleccionado.manzana || '--' }}
+                  </p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
+                  <p class="text-xs font-medium text-slate-400">Número</p>
+
+                  <p class="mt-2 text-2xl font-bold text-[#0879a8]">
+                    {{ loteSeleccionado.numero || '--' }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- ÁREA / PERÍMETRO -->
+
+              <div class="grid grid-cols-2 gap-3">
+                <div class="rounded-xl bg-slate-50 px-4 py-3">
+                  <p class="text-xs text-slate-400">Área</p>
+
+                  <p class="mt-1 text-sm font-bold text-slate-700">
+                    {{ loteSeleccionado.area || '--' }} m²
+                  </p>
+                </div>
+
+                <div class="rounded-xl bg-slate-50 px-4 py-3">
+                  <p class="text-xs text-slate-400">Perímetro</p>
+
+                  <p class="mt-1 text-sm font-bold text-slate-700">
+                    {{ loteSeleccionado.perimetro || '--' }} m
+                  </p>
+                </div>
+              </div>
+
+              <!-- ESTADO -->
+
+              <div class="rounded-2xl border border-slate-100 p-4">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="text-sm text-slate-500"> Estado </span>
+
+                  <span
+                    class="rounded-lg bg-slate-50 px-3 py-1.5 text-xs font-bold"
+                    :class="estados[loteSeleccionado?.estado_id]?.color"
+                  >
+                    {{ estados[loteSeleccionado?.estado_id]?.nombre || '--' }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- PRECIO -->
+
+              <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <span class="text-sm text-slate-500"> Precio </span>
+
+                <span class="text-lg font-bold text-[#0b2d52]">
+                  S/
+                  {{ loteSeleccionado.precio || '--' }}
+                </span>
+              </div>
+
+              <!-- VERSIÓN -->
+
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-slate-500"> Versión </span>
+
+                <span class="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">
+                  v{{ loteSeleccionado.version_actual || 1 }}
+                </span>
+              </div>
+
+              <!-- ACTUALIZACIÓN -->
+
+              <div class="flex items-center justify-between gap-4">
+                <span class="text-sm text-slate-500"> Última actualización </span>
+
+                <span class="text-right text-xs font-semibold text-slate-700">
+                  {{
+                    loteSeleccionado.fecha_actualizacion
+                      ? new Date(loteSeleccionado.fecha_actualizacion).toLocaleDateString()
+                      : '--'
+                  }}
+                </span>
+              </div>
+
+              <!-- ACCIONES -->
+
+              <div class="grid grid-cols-1 gap-2 pt-2 sm:grid-cols-2">
+                <button
+                  v-if="authStore.usuario?.rol_id === 1"
+                  type="button"
+                  @click="abrirModalEditar"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600"
+                >
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.8"
+                      d="m16.86 3.49 3.65 3.65M5 19l3.2-.8L19.7 6.7a1.8 1.8 0 0 0 0-2.55l-.85-.85a1.8 1.8 0 0 0-2.55 0L4.8 14.8 4 18l1 1Z"
+                    />
+                  </svg>
+
+                  Editar
+                </button>
+
+                <button
+                  v-if="authStore.usuario?.rol_id === 2"
+                  type="button"
+                  @click="cambiarEstado"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0879a8] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#06688f] hover:shadow-md"
+                >
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.8"
+                      d="M12 3v18m9-9H3"
+                    />
+                  </svg>
+
+                  Cambiar estado
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================= -->
+        <!-- ESTADÍSTICAS -->
+        <!-- ================================================= -->
+
+        <section class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
+          <div class="border-b border-slate-100 px-5 py-5 md:px-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e8f6fb] text-[#0879a8]"
+              >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M4 19V5m0 14h16M8 16v-4m4 4V8m4 8v-6"
+                  />
+                </svg>
+              </div>
+
+              <div>
+                <h2 class="text-base font-bold text-[#0b2d52]">Estadísticas</h2>
+
+                <p class="mt-0.5 text-xs text-slate-400">Resumen de los lotes de esta zona.</p>
+              </div>
+            </div>
           </div>
 
-          <div class="space-y-5 p-6">
-            <div class="flex items-center justify-between">
-              <span class="text-slate-600"> 🟢 Disponibles </span>
+          <div class="grid grid-cols-2 gap-3 p-5 md:p-6">
+            <!-- DISPONIBLES -->
 
-              <span class="font-bold">
+            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-500"> Disponibles </span>
+
+                <span class="h-2.5 w-2.5 rounded-full bg-green-500"></span>
+              </div>
+
+              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
                 {{ estadisticas.disponibles }}
-              </span>
+              </p>
             </div>
 
             <!-- SEPARADOS -->
-            <div class="flex items-center justify-between">
-              <span class="text-slate-600"> 🟡 Separados </span>
 
-              <span class="font-bold">
+            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-500"> Separados </span>
+
+                <span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span>
+              </div>
+
+              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
                 {{ estadisticas.separados ?? estadisticas.reservados ?? 0 }}
-              </span>
+              </p>
             </div>
 
             <!-- AMORTIZADOS -->
-            <div class="flex items-center justify-between">
-              <span class="text-slate-600"> 🟠 Amortizados </span>
 
-              <span class="font-bold">
+            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-500"> Amortizados </span>
+
+                <span class="h-2.5 w-2.5 rounded-full bg-orange-400"></span>
+              </div>
+
+              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
                 {{ estadisticas.amortizados ?? 0 }}
-              </span>
+              </p>
             </div>
 
             <!-- VENDIDOS -->
-            <div class="flex items-center justify-between">
-              <span class="text-slate-600"> 🔴 Vendidos </span>
 
-              <span class="font-bold">
+            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-500"> Vendidos </span>
+
+                <span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>
+              </div>
+
+              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
                 {{ estadisticas.vendidos ?? 0 }}
-              </span>
+              </p>
             </div>
-
-            <hr />
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
 
-  <!-- Modal Editar Lote ADMINISTRADOR -->
+  <!-- ======================================================= -->
+  <!-- MODAL EDITAR LOTE -->
+  <!-- ======================================================= -->
+
   <div
     v-if="mostrarModalEditar"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm"
   >
-    <div class="w-full max-w-3xl rounded-2xl bg-white shadow-2xl">
-      <!-- Header -->
-      <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-800">Editar Lote</h2>
-          <p class="mt-1 text-sm text-slate-500">Modifique la información del lote seleccionado.</p>
+    <div
+      class="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
+    >
+      <!-- HEADER -->
+
+      <div class="flex items-center justify-between border-b border-slate-100 px-6 py-5 md:px-7">
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-amber-600"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="m16.86 3.49 3.65 3.65M5 19l3.2-.8L19.7 6.7a1.8 1.8 0 0 0 0-2.55l-.85-.85a1.8 1.8 0 0 0-2.55 0L4.8 14.8 4 18l1 1Z"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold text-[#0b2d52]">Editar lote</h2>
+
+            <p class="mt-0.5 text-sm text-slate-400">
+              Modifique la información del lote seleccionado.
+            </p>
+          </div>
         </div>
 
         <button
+          type="button"
           @click="mostrarModalEditar = false"
-          class="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
+          class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+          title="Cerrar"
         >
-          <i class="fa-solid fa-xmark text-xl"></i>
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
         </button>
       </div>
 
-      <!-- Body -->
-      <div class="p-6">
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <!-- Número -->
+      <!-- BODY -->
+
+      <div class="flex-1 overflow-y-auto p-6 md:p-7">
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <!-- NÚMERO -->
+
           <div>
-            <label class="mb-2 block text-sm font-medium text-slate-700"> Número </label>
+            <label class="mb-2 block text-sm font-semibold text-slate-700"> Número </label>
 
             <input
               v-model="loteForm.numero"
               type="text"
-              class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none"
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-[#0879a8] focus:bg-white focus:ring-4 focus:ring-[#0879a8]/10"
             />
           </div>
 
-          <!-- Área -->
+          <!-- ÁREA -->
+
           <div>
-            <label class="mb-2 block text-sm font-medium text-slate-700"> Área (m²) </label>
+            <label class="mb-2 block text-sm font-semibold text-slate-700"> Área (m²) </label>
 
             <input
               v-model="loteForm.area"
               type="number"
               step="0.01"
-              class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none"
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-[#0879a8] focus:bg-white focus:ring-4 focus:ring-[#0879a8]/10"
             />
           </div>
 
-          <!-- Precio -->
-          <div class="md:col-span-2">
-            <label class="mb-2 block text-sm font-medium text-slate-700"> Precio </label>
+          <!-- PRECIO -->
 
-            <input
-              v-model="loteForm.precio"
-              type="number"
-              step="0.01"
-              class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none"
-            />
-            <label class="mb-2 block text-sm font-medium text-slate-700"> Estado </label>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-slate-700"> Precio </label>
+
+            <div class="relative">
+              <span
+                class="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400"
+              >
+                S/
+              </span>
+
+              <input
+                v-model="loteForm.precio"
+                type="number"
+                step="0.01"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-700 outline-none transition focus:border-[#0879a8] focus:bg-white focus:ring-4 focus:ring-[#0879a8]/10"
+              />
+            </div>
+          </div>
+
+          <!-- ESTADO -->
+
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-slate-700"> Estado </label>
 
             <select
               v-model="loteForm.estado_id"
-              class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none"
+              class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-[#0879a8] focus:bg-white focus:ring-4 focus:ring-[#0879a8]/10"
             >
-              <option :value="1">🟢 Disponible</option>
-              <option :value="2">🟡 Reservado</option>
-              <option :value="3">🔴 Vendido</option>
-              <option :value="4">⚫ Bloqueado</option>
+              <option :value="1">Disponible</option>
+
+              <option :value="2">Reservado</option>
+
+              <option :value="3">Vendido</option>
+
+              <option :value="4">Amortizado</option>
             </select>
           </div>
         </div>
+
+        <!-- ÚLTIMA ACTUALIZACIÓN -->
+
+        <div class="mt-6 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <p class="text-xs font-medium text-slate-400">Última actualización</p>
+
+          <p class="mt-1 text-sm font-semibold text-slate-700">
+            {{
+              loteSeleccionado?.fecha_actualizacion
+                ? new Date(loteSeleccionado.fecha_actualizacion).toLocaleString()
+                : 'Nunca'
+            }}
+          </p>
+        </div>
       </div>
 
-      <!-- Footer -->
-      <div class="flex justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5">
+      <!-- FOOTER -->
+
+      <div
+        class="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50/50 px-6 py-5 sm:flex-row sm:justify-end md:px-7"
+      >
         <button
+          type="button"
           @click="mostrarModalEditar = false"
-          class="rounded-xl border border-slate-300 bg-white px-5 py-2.5 font-medium text-slate-700 transition hover:bg-slate-100"
+          class="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
         >
           Cancelar
         </button>
 
         <button
+          type="button"
           @click="guardarEdicion"
-          class="rounded-xl bg-indigo-600 px-6 py-2.5 font-medium text-white transition hover:bg-indigo-700"
+          class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0879a8] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#06688f] hover:shadow-md"
         >
-          <i class="fa-solid fa-floppy-disk mr-2"></i>
-          Guardar Cambios
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              d="M5 12.5 9.5 17 19 7.5"
+            />
+          </svg>
+
+          Guardar cambios
         </button>
-      </div>
-
-      <div class="mt-6 rounded-xl bg-slate-50 border border-slate-200 p-4">
-        <div class="text-sm text-slate-500">Última actualización</div>
-
-        <div class="font-semibold text-slate-700">
-          {{
-            loteSeleccionado?.fecha_actualizacion
-              ? new Date(loteSeleccionado.fecha_actualizacion).toLocaleString()
-              : 'Nunca'
-          }}
-        </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal Cambiar Estado VENDEDOR-->
+  <!-- ======================================================= -->
+  <!-- MODAL CAMBIAR ESTADO -->
+  <!-- ======================================================= -->
+
   <div
     v-if="mostrarModalEstado"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm"
   >
-    <div class="w-full max-w-lg rounded-2xl bg-white shadow-2xl">
-      <!-- Header -->
-      <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-800">Actualizar Estado</h2>
+    <div class="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl">
+      <!-- HEADER -->
 
-          <p class="mt-1 text-sm text-slate-500">Lote {{ loteSeleccionado?.numero }}</p>
-        </div>
+      <div class="flex items-center justify-between border-b border-slate-100 px-6 py-5">
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#e8f6fb] text-[#0879a8]"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M12 6v6l4 2"
+              />
 
-        <button @click="cancelarEstado" class="rounded-lg p-2 hover:bg-slate-100">
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-      </div>
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+          </div>
 
-      <!-- Body -->
-      <div class="p-6 space-y-6">
-        <div>
-          <label class="block text-sm font-medium text-slate-700 mb-2"> Estado actual </label>
+          <div>
+            <h2 class="text-xl font-bold text-[#0b2d52]">Actualizar estado</h2>
 
-          <div class="rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-semibold">
-            {{ estados[loteSeleccionado?.estado_id]?.nombre }}
+            <p class="mt-0.5 text-sm text-slate-400">Lote {{ loteSeleccionado?.numero }}</p>
           </div>
         </div>
 
+        <button
+          type="button"
+          @click="cancelarEstado"
+          class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+          title="Cerrar"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- BODY -->
+
+      <div class="space-y-5 p-6">
+        <!-- ESTADO ACTUAL -->
+
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-2"> Nuevo Estado </label>
+          <label class="mb-2 block text-sm font-semibold text-slate-700"> Estado actual </label>
+
+          <div
+            class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3"
+          >
+            <span class="text-sm font-semibold text-slate-700">
+              {{ estados[loteSeleccionado?.estado_id]?.nombre }}
+            </span>
+
+            <span
+              class="h-3 w-3 rounded-full"
+              :class="{
+                'bg-green-500': loteSeleccionado?.estado_id === 1,
+                'bg-yellow-400': loteSeleccionado?.estado_id === 2,
+                'bg-red-500': loteSeleccionado?.estado_id === 3,
+                'bg-orange-400': loteSeleccionado?.estado_id === 4,
+              }"
+            ></span>
+          </div>
+        </div>
+
+        <!-- NUEVO ESTADO -->
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold text-slate-700"> Nuevo estado </label>
 
           <select
             v-model="estadoForm.estado_id"
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-[#0879a8] focus:bg-white focus:ring-4 focus:ring-[#0879a8]/10"
           >
             <!-- LIBRE -->
+
             <template v-if="loteSeleccionado?.estado_id === 1">
-              <option :value="2">🟡 Separado — 5 días</option>
-              <option :value="4">🟠 Amortizado — 15 días</option>
-              <option :value="3">🔵 Vendido</option>
+              <option :value="2">Separado — 5 días</option>
+
+              <option :value="4">Amortizado — 15 días</option>
+
+              <option :value="3">Vendido</option>
             </template>
 
             <!-- SEPARADO -->
+
             <template v-else-if="loteSeleccionado?.estado_id === 2">
-              <option :value="4">🟠 Amortizado — 15 días</option>
-              <option :value="3">🔵 Vendido</option>
+              <option :value="4">Amortizado — 15 días</option>
+
+              <option :value="3">Vendido</option>
             </template>
 
             <!-- AMORTIZADO -->
+
             <template v-else-if="loteSeleccionado?.estado_id === 4">
-              <option :value="3">🔵 Vendido</option>
+              <option :value="3">Vendido</option>
             </template>
 
             <!-- VENDIDO -->
+
             <template v-else-if="loteSeleccionado?.estado_id === 3">
-              <option :value="3">🔵 Vendido</option>
+              <option :value="3">Vendido</option>
             </template>
           </select>
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="flex justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5">
+      <!-- FOOTER -->
+
+      <div
+        class="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50/50 px-6 py-5 sm:flex-row sm:justify-end"
+      >
         <button
+          type="button"
           @click="cancelarEstado"
-          class="rounded-xl border border-slate-300 bg-white px-5 py-2.5 hover:bg-slate-100"
+          class="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
         >
           Cancelar
         </button>
 
         <button
+          type="button"
           @click="guardarEstado"
-          class="rounded-xl bg-indigo-600 px-6 py-2.5 text-white hover:bg-indigo-700"
+          class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0879a8] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#06688f] hover:shadow-md"
         >
-          <i class="fa-solid fa-floppy-disk mr-2"></i>
-          Guardar Estado
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              d="M5 12.5 9.5 17 19 7.5"
+            />
+          </svg>
+
+          Guardar estado
         </button>
       </div>
     </div>
   </div>
 
-  <!-- CIRCULAR PROGRESS -->
+  <!-- ======================================================= -->
+  <!-- LOADING GLOBAL -->
+  <!-- ======================================================= -->
+
   <div
     v-if="cargando"
-    class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/30 backdrop-blur-sm"
+    class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-950/25 backdrop-blur-[2px]"
   >
-    <div
-      class="h-16 w-16 rounded-full border-[6px] border-indigo-200 border-t-indigo-600 animate-spin"
-    ></div>
+    <div class="flex flex-col items-center gap-3 rounded-2xl bg-white px-7 py-6 shadow-2xl">
+      <svg
+        class="h-9 w-9 animate-spin text-[#0879a8]"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+
+        <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4Z" />
+      </svg>
+
+      <p class="text-sm font-semibold text-[#0b2d52]">Procesando...</p>
+    </div>
   </div>
 </template>
 
@@ -441,10 +870,10 @@ const cambiarEstado = () => {
   }
 
   // Bloqueado por administrador
-  if (loteSeleccionado.value.estado_id === 4) {
+  /*if (loteSeleccionado.value.estado_id === 4) {
     toast.warning('Este lote está amortizado.')
     return
-  }
+  }*/
 
   // Ya lo está editando otro colaborador
   if (loteSeleccionado.value.enEdicion) {
