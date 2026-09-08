@@ -29,6 +29,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copiar el dist generado en la etapa anterior
 COPY --from=build /app/dist /usr/share/nginx/html
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Puerto interno de Nginx
 EXPOSE 80
 
