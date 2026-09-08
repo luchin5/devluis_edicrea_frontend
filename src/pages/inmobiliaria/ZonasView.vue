@@ -879,7 +879,7 @@ const cargarPlano = async () => {
   })
 
   plano.value = data
-  const uploadsUrl = import.meta.env.VITE_UPLOADS_URL
+  const uploadsUrl = import.meta.env.VITE_UPLOADS_URL || window.location.origin
   const respuesta = await axios.get(`${uploadsUrl}/uploads/planos/${data.archivo_svg}`)
 
   svgPlano.value = respuesta.data
