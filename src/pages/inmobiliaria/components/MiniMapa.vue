@@ -308,12 +308,12 @@ const finalizarPinch = () => {
 const obtenerColorEstado = (estadoId) => {
   switch (Number(estadoId)) {
     case 1:
-      // Libre / Disponible
-      return '#f8fafc'
+      // Disponible
+      return '#ffffff'
 
     case 2:
       // Separado
-      return '#facc15'
+      return '#a855f7'
 
     case 3:
       // Vendido
@@ -321,10 +321,10 @@ const obtenerColorEstado = (estadoId) => {
 
     case 4:
       // Amortizado
-      return '#a855f7'
+      return '#38bdf8'
 
     default:
-      return '#f8fafc'
+      return '#ffffff'
   }
 }
 
@@ -374,6 +374,7 @@ const pintarSVG = async () => {
     path.setAttribute('fill', '#d1d5db')
 
     path.setAttribute('stroke', '#ffffff')
+    path.setAttribute('stroke-width', '1')
   })
 
   // ==========================================================

@@ -423,7 +423,7 @@
               <div class="flex items-center justify-between">
                 <span class="text-xs font-medium text-slate-500"> Disponibles </span>
 
-                <span class="h-2.5 w-2.5 rounded-full bg-green-500"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-white border-2 border-black"></span>
               </div>
 
               <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
@@ -437,7 +437,7 @@
               <div class="flex items-center justify-between">
                 <span class="text-xs font-medium text-slate-500"> Separados </span>
 
-                <span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-purple-500"></span>
               </div>
 
               <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
@@ -451,7 +451,7 @@
               <div class="flex items-center justify-between">
                 <span class="text-xs font-medium text-slate-500"> Amortizados </span>
 
-                <span class="h-2.5 w-2.5 rounded-full bg-orange-400"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-sky-400"></span>
               </div>
 
               <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
@@ -720,10 +720,10 @@
             <span
               class="h-3 w-3 rounded-full"
               :class="{
-                'bg-green-500': loteSeleccionado?.estado_id === 1,
-                'bg-yellow-400': loteSeleccionado?.estado_id === 2,
+                'bg-white border border-slate-300': loteSeleccionado?.estado_id === 1,
+                'bg-purple-500': loteSeleccionado?.estado_id === 2,
                 'bg-red-500': loteSeleccionado?.estado_id === 3,
-                'bg-orange-400': loteSeleccionado?.estado_id === 4,
+                'bg-sky-400': loteSeleccionado?.estado_id === 4,
               }"
             ></span>
           </div>
@@ -996,11 +996,11 @@ const abrirModalEditar = () => {
 const estados = {
   1: {
     nombre: 'Disponible',
-    color: 'text-green-600',
+    color: 'text-slate-700',
   },
   2: {
     nombre: 'Separado',
-    color: 'text-yellow-600',
+    color: 'text-purple-600',
   },
   3: {
     nombre: 'Vendido',
@@ -1008,7 +1008,7 @@ const estados = {
   },
   4: {
     nombre: 'Amortizado',
-    color: 'text-slate-600',
+    color: 'text-sky-600',
   },
 }
 const cargarEstadisticas = async () => {
