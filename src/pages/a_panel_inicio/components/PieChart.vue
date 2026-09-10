@@ -27,17 +27,32 @@ const obtenerTotal = (estado) => {
 }
 
 const totalLotes = computed(() => {
-  return obtenerTotal('Libre') + obtenerTotal('Separado') + obtenerTotal('Vendido')
+  return (
+    obtenerTotal('Libre') +
+    obtenerTotal('Separado') +
+    obtenerTotal('Amortizado') +
+    obtenerTotal('Vendido')
+  )
 })
 
 const chartData = computed(() => ({
-  labels: ['Libres', 'Separados', 'Vendidos'],
+  labels: ['Libres', 'Separados', 'Amortizados', 'Vendidos'],
 
   datasets: [
     {
-      data: [obtenerTotal('Libre'), obtenerTotal('Separado'), obtenerTotal('Vendido')],
+      data: [
+        obtenerTotal('Libre'),
+        obtenerTotal('Separado'),
+        obtenerTotal('Amortizado'),
+        obtenerTotal('Vendido'),
+      ],
 
-      backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
+      backgroundColor: [
+        '#22c55e', // Disponible
+        '#a855f7', // Separado
+        '#38bdf8', // Amortizado
+        '#ef4444', // Vendido
+      ],
 
       borderColor: '#ffffff',
 
