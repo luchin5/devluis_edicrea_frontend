@@ -120,6 +120,80 @@
           </div>
         </div>
 
+        <!-- =================================================== -->
+        <!-- ESTADÍSTICAS RESUMIDAS -->
+        <!-- =================================================== -->
+
+        <div class="grid grid-cols-2 border-b border-slate-100 bg-white md:grid-cols-4">
+          <!-- DISPONIBLES -->
+          <div
+            class="flex items-center justify-between gap-3 border-b border-r border-slate-100 px-4 py-4 md:border-b-0 md:px-5"
+          >
+            <div class="min-w-0">
+              <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                Disponibles
+              </p>
+
+              <p class="mt-1 text-xl font-bold text-[#0b2d52]">
+                {{ estadisticas.disponibles }}
+              </p>
+            </div>
+
+            <span
+              class="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-slate-700 bg-white"
+            ></span>
+          </div>
+
+          <!-- SEPARADOS -->
+          <div
+            class="flex items-center justify-between gap-3 border-b border-slate-100 px-4 py-4 md:border-b-0 md:border-r md:px-5"
+          >
+            <div class="min-w-0">
+              <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                Separados
+              </p>
+
+              <p class="mt-1 text-xl font-bold text-[#0b2d52]">
+                {{ estadisticas.separados ?? estadisticas.reservados ?? 0 }}
+              </p>
+            </div>
+
+            <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-purple-500"></span>
+          </div>
+
+          <!-- AMORTIZADOS -->
+          <div
+            class="flex items-center justify-between gap-3 border-r border-slate-100 px-4 py-4 md:px-5"
+          >
+            <div class="min-w-0">
+              <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                Amortizados
+              </p>
+
+              <p class="mt-1 text-xl font-bold text-[#0b2d52]">
+                {{ estadisticas.amortizados ?? 0 }}
+              </p>
+            </div>
+
+            <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-sky-400"></span>
+          </div>
+
+          <!-- VENDIDOS -->
+          <div class="flex items-center justify-between gap-3 px-4 py-4 md:px-5">
+            <div class="min-w-0">
+              <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                Vendidos
+              </p>
+
+              <p class="mt-1 text-xl font-bold text-[#0b2d52]">
+                {{ estadisticas.vendidos ?? 0 }}
+              </p>
+            </div>
+
+            <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-red-500"></span>
+          </div>
+        </div>
+
         <!-- MAPA -->
 
         <div class="flex min-h-[620px] items-center justify-center bg-slate-50 p-4 md:p-6">
@@ -384,93 +458,6 @@
                   Cambiar estado
                 </button>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ================================================= -->
-        <!-- ESTADÍSTICAS -->
-        <!-- ================================================= -->
-
-        <section class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
-          <div class="border-b border-slate-100 px-5 py-5 md:px-6">
-            <div class="flex items-center gap-3">
-              <div
-                class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e8f6fb] text-[#0879a8]"
-              >
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.8"
-                    d="M4 19V5m0 14h16M8 16v-4m4 4V8m4 8v-6"
-                  />
-                </svg>
-              </div>
-
-              <div>
-                <h2 class="text-base font-bold text-[#0b2d52]">Estadísticas</h2>
-
-                <p class="mt-0.5 text-xs text-slate-400">Resumen de los lotes de esta zona.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-3 p-5 md:p-6">
-            <!-- DISPONIBLES -->
-
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-slate-500"> Disponibles </span>
-
-                <span class="h-2.5 w-2.5 rounded-full bg-white border-2 border-black"></span>
-              </div>
-
-              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
-                {{ estadisticas.disponibles }}
-              </p>
-            </div>
-
-            <!-- SEPARADOS -->
-
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-slate-500"> Separados </span>
-
-                <span class="h-2.5 w-2.5 rounded-full bg-purple-500"></span>
-              </div>
-
-              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
-                {{ estadisticas.separados ?? estadisticas.reservados ?? 0 }}
-              </p>
-            </div>
-
-            <!-- AMORTIZADOS -->
-
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-slate-500"> Amortizados </span>
-
-                <span class="h-2.5 w-2.5 rounded-full bg-sky-400"></span>
-              </div>
-
-              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
-                {{ estadisticas.amortizados ?? 0 }}
-              </p>
-            </div>
-
-            <!-- VENDIDOS -->
-
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-slate-500"> Vendidos </span>
-
-                <span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>
-              </div>
-
-              <p class="mt-2 text-2xl font-bold text-[#0b2d52]">
-                {{ estadisticas.vendidos ?? 0 }}
-              </p>
             </div>
           </div>
         </section>
@@ -1116,8 +1103,21 @@ const registrarEventos = () => {
 
     mostrarModalEstado.value = true
   })
-
+  /*
   socketService.onLoteBloqueado(({ mensaje }) => {
+    toast.warning(mensaje)
+  })*/
+  socketService.onLoteBloqueado(({ loteId, mensaje }) => {
+    const lote = lotes.value.find((l) => l.id === loteId)
+
+    if (lote) {
+      lote.enEdicion = true
+    }
+
+    if (loteSeleccionado.value?.id === loteId) {
+      mostrarModalEstado.value = false
+    }
+
     toast.warning(mensaje)
   })
 
@@ -1129,7 +1129,8 @@ const registrarEventos = () => {
     lote.enEdicion = true
     // Solo aviso si el usuario tiene seleccionado ese lote AQUI OJO REVISAR SI CONVIENE O NO ESTA MODIFICACION DEL TOAST
     if (loteSeleccionado.value?.id === loteId) {
-      toast.info(`El lote ${lote.numero} está siendo gestionado por otro colaborador.`)
+      mostrarModalEstado.value = false
+      toast.warning(`El lote ${lote.numero} está siendo gestionado por otro colaborador.`)
     }
   })
 
@@ -1161,13 +1162,11 @@ const registrarEventos = () => {
 }
 onMounted(async () => {
   socketService.connect(authStore.usuario.id)
-
+  registrarEventos()
   await cargarZona()
   await cargarPlano()
   await cargarLotes()
   await cargarEstadisticas()
-
-  registrarEventos()
 })
 
 onUnmounted(() => {
