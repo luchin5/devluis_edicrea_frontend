@@ -1015,7 +1015,7 @@ const cargarEstadisticas = async () => {
     console.error('Error al cargar estadísticas:', error)
   }
 }
-const seleccionarLote = (datos) => {
+/*const seleccionarLote = (datos) => {
   loteSeleccionado.value = lotes.value.find((l) => l.coordenadas_svg === datos.id) || null
 
   if (loteSeleccionado.value) {
@@ -1025,6 +1025,19 @@ const seleccionarLote = (datos) => {
       perimetro: datos.perimetro,
     }
   }
+}*/
+const seleccionarLote = (datos) => {
+  const lote = lotes.value.find((l) => l.coordenadas_svg === datos.id)
+
+  if (!lote) {
+    loteSeleccionado.value = null
+    return
+  }
+
+  lote.manzana = datos.manzana
+  lote.perimetro = datos.perimetro
+
+  loteSeleccionado.value = lote
 }
 /*
 const seleccionarLote = (svgId) => {
