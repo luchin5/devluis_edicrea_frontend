@@ -267,37 +267,76 @@ const zoomConRueda = (event) => {
 // PINCH - INICIO
 // ============================================================
 
+// ============================================================
+// TOUCH / MÓVIL
+// ============================================================
+
 const iniciarPinch = (event) => {
-  if (event.touches.length !== 2) return
+  // ----------------------------------------------------------
+  // UN DEDO → ARRASTRAR MAPA
+  // ----------------------------------------------------------
+  if (event.touches.length === 1) {
+    arrastrando.value = true
 
-  distanciaInicial.value = calcularDistancia(event.touches[0], event.touches[1])
+    inicioX.value = event.touches[0].clientX
+    inicioY.value = event.touches[0].clientY
 
-  zoomInicial.value = zoom.value
+    posicionInicialX.value = posicionX.value
+    posicionInicialY.value = posicionY.value
+
+    distanciaInicial.value = 0
+
+    return
+  }
+
+  // ----------------------------------------------------------
+  // DOS DEDOS → PINCH / ZOOM
+  // ----------------------------------------------------------
+  if (event.touches.length === 2) {
+    arrastrando.value = false
+
+    distanciaInicial.value = calcularDistancia(event.touches[0], event.touches[1])
+
+    zoomInicial.value = zoom.value
+  }
 }
-
-// ============================================================
-// PINCH - MOVIMIENTO
-// ============================================================
 
 const moverPinch = (event) => {
-  if (event.touches.length !== 2) return
+  // ----------------------------------------------------------
+  // UN DEDO → MOVER MAPA
+  // ----------------------------------------------------------
+  if (event.touches.length === 1 && arrastrando.value) {
+    const diferenciaX = event.touches[0].clientX - inicioX.value
 
-  const distanciaActual = calcularDistancia(event.touches[0], event.touches[1])
+    const diferenciaY = event.touches[0].clientY - inicioY.value
 
-  if (!distanciaInicial.value) return
+    posicionX.value = posicionInicialX.value + diferenciaX
 
-  const factor = distanciaActual / distanciaInicial.value
+    posicionY.value = posicionInicialY.value + diferenciaY
 
-  zoom.value = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, zoomInicial.value * factor))
+    aplicarTransformacion()
 
-  aplicarTransformacion()
+    return
+  }
+
+  // ----------------------------------------------------------
+  // DOS DEDOS → ZOOM
+  // ----------------------------------------------------------
+  if (event.touches.length === 2) {
+    const distanciaActual = calcularDistancia(event.touches[0], event.touches[1])
+
+    if (!distanciaInicial.value) return
+
+    const factor = distanciaActual / distanciaInicial.value
+
+    zoom.value = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, zoomInicial.value * factor))
+
+    aplicarTransformacion()
+  }
 }
 
-// ============================================================
-// PINCH - FIN
-// ============================================================
-
 const finalizarPinch = () => {
+  arrastrando.value = false
   distanciaInicial.value = 0
 }
 
