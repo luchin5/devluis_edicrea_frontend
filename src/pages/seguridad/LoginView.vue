@@ -1,8 +1,10 @@
 <template>
-  <div class="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4">
+  <div
+    class="min-h-screen bg-[#f8fafc] flex items-center justify-center p-3 overflow-y-auto md:p-4"
+  >
     <!-- CONTENEDOR PRINCIPAL -->
     <div
-      class="relative w-full max-w-6xl h-[calc(100vh-32px)] max-h-[720px] overflow-hidden rounded-[2rem] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
+      class="relative w-full max-w-6xl min-h-[calc(100vh-32px)] h-auto lg:h-[calc(100vh-32px)] lg:max-h-[720px] overflow-hidden rounded-[2rem] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.12)]"
     >
       <!-- IMAGEN DE FONDO DE TODA LA COMPOSICIÓN -->
       <img src="/images/casa4.png" alt="" class="absolute inset-0 h-full w-full object-cover" />
@@ -26,13 +28,13 @@
       <!-- CONTENIDO -->
       <!-- ========================================= -->
 
-      <div class="relative z-10 grid h-full lg:grid-cols-2">
+      <div class="relative z-10 grid min-h-full lg:h-full lg:grid-cols-2">
         <!-- ========================================= -->
         <!-- PANEL IZQUIERDO -->
         <!-- ========================================= -->
 
         <section
-          class="relative flex h-full flex-col justify-between overflow-hidden px-10 py-10 xl:px-14"
+          class="relative flex h-auto min-h-[420px] flex-col justify-between overflow-hidden px-6 py-8 md:px-10 md:py-10 lg:h-full xl:px-14"
         >
           <!-- DECORACIÓN -->
           <div class="absolute -top-32 -left-32 h-[420px] w-[420px] rounded-full bg-sky-50"></div>
@@ -46,7 +48,9 @@
           ></div>
 
           <!-- CONTENIDO -->
-          <div class="relative z-10 flex h-full flex-col p-10 xl:p-14">
+          <div
+            class="relative z-10 flex h-auto min-h-[420px] flex-col p-6 md:p-10 lg:h-full xl:p-14"
+          >
             <!-- LOGO -->
             <div>
               <img

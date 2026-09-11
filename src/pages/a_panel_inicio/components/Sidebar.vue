@@ -49,7 +49,7 @@
           />
         </svg>
 
-        <span>Dashboard</span>
+        <span>Inicio</span>
       </RouterLink>
 
       <!-- PROYECTOS -->
